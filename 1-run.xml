@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="info" dumptraffic="false" version="1.0">
+
+  <clients>
+    <client host="localhost" use_controller_vm="true"/>
+  </clients>
+  
+  <servers>
+    <server host="dev18.pdffiller.com" port="443" type="ssl"></server>
+  </servers>
+
+  <load>
+   <arrivalphase phase="1" duration="30" unit="minute">
+     <users interarrival="0.04" unit="second"></users>
+   </arrivalphase>
+  </load>
+
+  <!--<option type="ts_http" name="user_agent">
+    <user_agent probability="100">
+       TestLab/2.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Mad/19.07.1985
+    </user_agent>
+  </option>-->
+
+  <sessions>
+    <session name='mad-pdffiller' probability='100'  type='ts_http'>
+
+      <request subst="true">
+        <dyn_variable name="token" jsonpath="token" />
+        <http url='/api_v3/users/login/?appKey=ANDROID_erEf2v54szx3fOxxU4&amp;device=android&amp;email=os.test.selenium.pdffiller@gmail.com&amp;password=qwerty' version='1.1' if_modified_since='Mon, 20 Mar 2015 00:00:00 GMT' method='GET'></http>
+      </request>
+
+      <thinktime random='true' value='3'/>
+
+      <request subst="true">
+        <dyn_variable name="projectid" jsonpath="id" />
+        <dyn_variable name="userid" jsonpath="userId" />
+        <http url='/api_v3/upload/link/?appKey=ANDROID_erEf2v54szx3fOxxU4&amp;device=android&amp;token=%%_token%%&amp;userId=10975493&amp;folderId=0&amp;url=http%3A%2F%2Fwww.irs.gov%2Fpub%2Firs-pdf%2Fiw9.pdf' version='1.1' if_modified_since='Mon, 20 Mar 2015 00:00:00 GMT' method='GET'></http>
+
+        
+      </request>
+
+      <setdynvars sourcetype="eval"
+	        code='fun({_, DynVars}) ->
+	                    {ok, Val} = ts_dynvars:lookup(projectid, DynVars),
+                      {ok, Val2} = ts_dynvars:lookup(userid, DynVars),
+	                    Value = lists:flatten(io_lib:format("~p",[Val])),
+                      Value2 = lists:flatten(io_lib:format("~p",[Val2])),
+	                    {ok, File} = file:open("/home/mad/pdffiller/project_ids.csv",[append]),
+	                    file:write(File, Value),
+                      file:write(File, ";"),
+                      file:write(File, Value2),
+	                    file:write(File, "\r\n"),
+	                    file:close(File),
+	                    ok
+	                  end.'>
+        <var name="dummy" />
+    	</setdynvars>
+      
+    </session>
+  </sessions>
+</tsung>
