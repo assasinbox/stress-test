@@ -7,16 +7,38 @@ A set of [Tsung](http://tsung.erlang-projects.org/)-based scripts intended to st
 This is a one-call solution, just fire up the SSH script and a predefined (*X* / *Y*) avalanche of requests will fly towards `dev18.pdffiller.com`.
 
 ```
-./run_websocket_tests.sh
+tsung -f 2-run.xml start
 ```
 
+It will print out the log path, something like
+
+
+```
+Starting Tsung
+"Log directory is: /home/mad/.tsung/log/20150615-1523"
+```
+
+When the test will end you'll need to `cd /home/mad/.tsung/log/20150615-1523` (don't forget to substitute your own folder, it's timestamped) and execute the following command
+
+```
+/usr/lib/tsung/bin/tsung_stats.pl --dygraph
+```
+
+It will generate the HTML report for the run, you can just enable web access to the reports folder or download the whole folder locally for your viewing pleasure.
+
 There are two scripts in the bundle:
- * '1-run.xml', which sole purpose is to generate a large amount of different projects and save their IDs to the 'project_ids.csv' file.
- * '2-run.xml' which is a websocket-targeted part, using previously generated project IDs (in a random fashion) and sending a list of requests according to the documentation, as well as ping requests. Script has random 1-5 sec pauses between requests to provide more uniformed load.
+ * `1-run.xml`, which sole purpose is to generate a large amount of different projects and save their IDs to the 'project_ids.csv' file.
+ * `2-run.xml` which is a websocket-targeted part, using previously generated project IDs (in a random fashion) and sending a list of requests according to the documentation, as well as ping requests. Script has random 1-5 sec pauses between requests to provide more uniformed load.
 
 ## Installation
 
 The environment requires latest [Tsung](http://tsung.erlang-projects.org/) load testing tool and all its dependencies. At the moment of this file' creation the latest pre-built Ubuntu-targeted package was [tsung_1.5.2a-1](http://tsung.erlang-projects.org/dist/ubuntu/trusty/tsung_1.5.2a-1_all.deb).
+
+Server `` is completely prepared to execute the tests, no further configuration required.
+
+## Monitoring
+
+The default target server `dev18.pdffiller.com` is available for monitoring through the [Zabbix](http://noc.pdffiller.com/zabbix/). As a further step in this solution' improvement we can use remote SSH-based resouce monitoring that comes bundled with the Tsung, though it'll require a bit of firewall punching and configuration effort.
 
 ## API Reference
 
