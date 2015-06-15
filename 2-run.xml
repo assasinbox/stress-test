@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="info" dumptraffic="false" version="1.0">
+  <!-- Load the project IDs from the csv file in the same folder,
+      proceed with a chain of websocket quieries according to the specification
+      https://docs.google.com/document/d/1xuvBcWBl8UWtRYls5bfjnprwZIP1CAfwxjI2-BehHP4/edit -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="36000" cpu="1"/>
+  </clients>
+  
+  <servers>
+    <server host="dev18.pdffiller.com" port="8085" type="tcp"></server>
+  </servers>
+
+  <load>
+   <arrivalphase phase="1" duration="30" unit="minute">
+     <!--<users interarrival="0.04" unit="second"></users>-->
+     <users interarrival="0.04" unit="second"></users>
+   </arrivalphase>
+  </load>
+
+  <options>
+    <option name="file_server" id='project_ids' value="/home/mad/pdffiller/project_ids.csv"></option>
+  </options>
+
+  <sessions>
+    <session name='mad-pdffiller-websocket' probability='100'  type='ts_websocket'>
+
+      <setdynvars sourcetype="file" fileid="project_ids" delimiter=";" order="random">
+        <var name="project_id" />
+        <var name="the_rest" />
+      </setdynvars>
+
+      <request subst="true">
+        <websocket type="connect" path="/ws/"></websocket>
+      </request>
+
+      <request subst="true">        
+        <websocket type="message">
+            {
+                "auth": {
+                    "properties": {
+                        "projectId": %%_project_id%%,
+                        "viewerId": 10975493,
+                        "clientType": "android",
+                        "mode": "edit"
+                    }
+                }
+            }
+        </websocket>
+      </request>
+
+      <thinktime value="3" random="true"></thinktime>
+
+      <!-- PING -->
+      <request>        
+        <websocket type="message">
+            {}
+        </websocket>
+      </request>
+
+      <request subst="true">        
+        <websocket type="message">
+            {
+                "operations": [
+                    {
+                        "id": {
+                            "clientId": 0,
+                            "localId": 1
+                        },
+                        "properties": {
+                            "group": "images",
+                            "type": "list",
+                            "element": {
+                                "clientId": 0,
+                                "localId": 1
+                            }
+                        }
+                    }
+                ]
+            }
+        </websocket>
+      </request>
+
+      <thinktime value="4" random="true"></thinktime>
+
+      <!-- PING -->
+      <request>        
+        <websocket type="message">
+            {}
+        </websocket>
+      </request>
+
+      <request subst="true">        
+        <websocket type="message">
+            {
+                "operations": [
+                    {
+                        "id": {
+                            "clientId": 0,
+                            "localId": 2
+                        },
+                        "properties": {
+                            "group": "signatures",
+                            "type": "list",
+                            "element": {
+                                "clientId": 0,
+                                "localId": 2
+                            }
+                        }
+                    }
+                ]
+            }
+        </websocket>
+      </request>
+
+      <setdynvars sourcetype="random_string" length="16">
+  		   <var name="rndstring1" />
+  		</setdynvars>   
+      <setdynvars sourcetype="random_number" start="3" end="32">
+        <var name="rndint" />
+      </setdynvars>
+
+      <thinktime value="5" random="true"></thinktime>
+
+      <!-- PING -->
+      <request>        
+        <websocket type="message">
+            {}
+        </websocket>
+      </request>
+
+      <request subst="true">	     
+        <websocket type="message">
+            {
+			    "operations": [
+			        {
+			            "id": {
+			                "clientId": 0,
+			                "localId": 3
+			            },
+			            "properties": {
+			                "group": "tools",
+			                "type": "text",
+			                "subType": "none",
+			                "pageId": 0,
+			                "x": 0,
+			                "y": 0,
+			                "owner": 100,
+			                "multiline": true,
+			                "width": -1,
+			                "fontFamily": "Arial",
+			                "fontSize": %%_rndint%%,
+			                "fontColor": "0",
+			                "text": "This is a random string: %%_rndstring1%%",
+			                "underline": true,
+			                "italic": false,
+			                "bold": false,
+			                "element": {
+			                    "clientId": 0,
+			                    "localId": 3
+			                }
+			            }
+			        }
+			    ]
+			}
+        </websocket>
+      </request>
+
+      <thinktime value="5" random="true"></thinktime>
+
+      <!-- PING -->
+      <request>        
+        <websocket type="message">
+            {}
+        </websocket>
+      </request>
+
+      <request subst="true">        
+        <websocket type="message">
+            {
+			    "saveas": {
+			        "operations": [
+			            {
+			                "id": {
+			                    "clientId": 0,
+			                    "localId": 4
+			                },
+			                "properties": {
+			                    "group": "export",
+			                    "type": "saveas",
+			                    "sid": "AUTO",
+			                    "element": {
+			                        "clientId": 0,
+			                        "localId": 4
+			                    }
+			                }
+			            }
+			        ]
+			    }
+			}
+        </websocket>
+      </request>
+
+      <thinktime value="3" random="true"></thinktime>
+
+      <!-- PING -->
+      <request subst="true">        
+        <websocket type="message">
+            {}
+        </websocket>
+      </request>
+
+      <request subst="true">        
+        <websocket type="message">
+            {
+			    "destroy": {
+			        "destroy": true
+			    }
+			}
+        </websocket>
+      </request>
+      
+    </session>
+  </sessions>
+</tsung>
