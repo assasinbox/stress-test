@@ -10,6 +10,10 @@ This is a one-call solution, just fire up the SSH script and a predefined (*X* /
 ./run_websocket_tests.sh
 ```
 
+There are two scripts in the bundle:
+ * '1-run.xml', which sole purpose is to generate a large amount of different projects and save their IDs to the 'project_ids.csv' file.
+ * '2-run.xml' which is a websocket-targeted part, using previously generated project IDs (in a random fashion) and sending a list of requests according to the documentation, as well as ping requests. Script has random 1-5 sec pauses between requests to provide more uniformed load.
+
 ## Installation
 
 The environment requires latest [Tsung](http://tsung.erlang-projects.org/) load testing tool and all its dependencies. At the moment of this file' creation the latest pre-built Ubuntu-targeted package was [tsung_1.5.2a-1](http://tsung.erlang-projects.org/dist/ubuntu/trusty/tsung_1.5.2a-1_all.deb).
