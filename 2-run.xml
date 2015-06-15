@@ -20,7 +20,7 @@
   </load>
 
   <options>
-    <option name="file_server" id='project_ids' value="/home/mad/pdffiller/project_ids.csv"></option>
+    <option name="file_server" id='project_ids' value="./project_ids.csv"></option>
   </options>
 
   <sessions>
