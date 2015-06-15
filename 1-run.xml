@@ -16,12 +16,6 @@
    </arrivalphase>
   </load>
 
-  <!--<option type="ts_http" name="user_agent">
-    <user_agent probability="100">
-       TestLab/2.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Mad/19.07.1985
-    </user_agent>
-  </option>-->
-
   <sessions>
     <session name='mad-pdffiller' probability='100'  type='ts_http'>
 
@@ -46,7 +40,7 @@
                       {ok, Val2} = ts_dynvars:lookup(userid, DynVars),
 	                    Value = lists:flatten(io_lib:format("~p",[Val])),
                       Value2 = lists:flatten(io_lib:format("~p",[Val2])),
-	                    {ok, File} = file:open("/home/mad/pdffiller/project_ids.csv",[append]),
+	                    {ok, File} = file:open("./project_ids.csv",[append]),
 	                    file:write(File, Value),
                       file:write(File, ";"),
                       file:write(File, Value2),
