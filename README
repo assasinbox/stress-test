@@ -1,0 +1,23 @@
+## Synopsis
+
+A set of [Tsung](http://tsung.erlang-projects.org/)-based scripts intended to stress-test the websocket part of the new PdfFiller application.
+
+## Code Example
+
+This is a one-call solution, just fire up the SSH script and a predefined (*X* / *Y*) avalanche of requests will fly towards `dev18.pdffiller.com`.
+
+```
+./run_websocket_tests.sh
+```
+
+## Installation
+
+The environment requires latest [Tsung](http://tsung.erlang-projects.org/) load testing tool and all its dependencies. At the moment of this file' creation the latest pre-built Ubuntu-targeted package was [tsung_1.5.2a-1](http://tsung.erlang-projects.org/dist/ubuntu/trusty/tsung_1.5.2a-1_all.deb).
+
+## API Reference
+
+The scenario was based on the workflow https://docs.google.com/document/d/1xuvBcWBl8UWtRYls5bfjnprwZIP1CAfwxjI2-BehHP4/edit supplied by @assasinbox
+
+## Contributors
+
+Maintained by @mad from [TestLab²](https://www.testlab2.com).
