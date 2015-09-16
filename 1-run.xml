@@ -13,7 +13,7 @@
 
   <load>
    <arrivalphase phase="1" duration="10" unit="minute">
-     <users interarrival="0.04" unit="second"></users>
+     <users interarrival="0.1" unit="second"></users>
    </arrivalphase>
   </load>
 
