@@ -9,7 +9,8 @@
   </clients>
   
   <servers>
-    <server host="devapp.pdffiller.com" port="8080" type="tcp"></server>
+    <!--<server host="devapp.pdffiller.com" port="8080" type="tcp"></server>-->
+    <server host="54.88.220.223" port="80" type="tcp"></server>
   </servers>
 
   <load>
@@ -19,7 +20,7 @@
   </load>
 
   <options>
-    <option name="file_server" id='project_ids' value="./project_ids.csv"></option>
+    <option name="file_server" id='project_ids' value="./project_ids_production.csv"></option>
   </options>
 
   <sessions>
@@ -40,7 +41,8 @@
                 "auth": {
                     "properties": {
                         "projectId": %%_project_id%%,
-                        "viewerId": 10975493,
+                        <!--"viewerId": 10975493,-->
+                        "viewerId": 30693945,
                         "clientType": "android",
                         "mode": "edit"
                     }

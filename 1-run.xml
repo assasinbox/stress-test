@@ -7,7 +7,8 @@
   </clients>
   
   <servers>
-    <server host="devapp.pdffiller.com" port="443" type="ssl"></server>
+    <!--<server host="devapp.pdffiller.com" port="443" type="ssl"></server>-->
+    <server host="pdffiller.com" port="443" type="ssl"></server>
   </servers>
 
   <load>
@@ -29,7 +30,8 @@
       <request subst="true">
         <dyn_variable name="projectid" jsonpath="id" />
         <dyn_variable name="userid" jsonpath="userId" />
-        <http url='/api_v3/upload/link/?appKey=ANDROID_erEf2v54szx3fOxxU4&amp;device=android&amp;token=%%_token%%&amp;userId=10975493&amp;folderId=0&amp;url=http%3A%2F%2Fwww.irs.gov%2Fpub%2Firs-pdf%2Fiw9.pdf' version='1.1' if_modified_since='Mon, 20 Mar 2015 00:00:00 GMT' method='GET'></http>
+        <!--<http url='/api_v3/upload/link/?appKey=ANDROID_erEf2v54szx3fOxxU4&amp;device=android&amp;token=%%_token%%&amp;userId=10975493&amp;folderId=0&amp;url=http%3A%2F%2Fwww.irs.gov%2Fpub%2Firs-pdf%2Fiw9.pdf' version='1.1' if_modified_since='Mon, 20 Mar 2015 00:00:00 GMT' method='GET'></http>-->
+        <http url='/api_v3/upload/link/?appKey=ANDROID_erEf2v54szx3fOxxU4&amp;device=android&amp;token=%%_token%%&amp;userId=30693945&amp;folderId=0&amp;url=http%3A%2F%2Fwww.irs.gov%2Fpub%2Firs-pdf%2Fiw9.pdf' version='1.1' if_modified_since='Mon, 20 Mar 2015 00:00:00 GMT' method='GET'></http>
 
         
       </request>
@@ -40,7 +42,7 @@
                       {ok, Val2} = ts_dynvars:lookup(userid, DynVars),
 	                    Value = lists:flatten(io_lib:format("~p",[Val])),
                       Value2 = lists:flatten(io_lib:format("~p",[Val2])),
-	                    {ok, File} = file:open("./project_ids.csv",[append]),
+	                    {ok, File} = file:open("./project_ids_production.csv",[append]),
 	                    file:write(File, Value),
                       file:write(File, ";"),
                       file:write(File, Value2),
