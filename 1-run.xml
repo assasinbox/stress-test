@@ -7,11 +7,11 @@
   </clients>
   
   <servers>
-    <server host="dev18.pdffiller.com" port="443" type="ssl"></server>
+    <server host="devapp.pdffiller.com" port="443" type="ssl"></server>
   </servers>
 
   <load>
-   <arrivalphase phase="1" duration="30" unit="minute">
+   <arrivalphase phase="1" duration="10" unit="minute">
      <users interarrival="0.04" unit="second"></users>
    </arrivalphase>
   </load>

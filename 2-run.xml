@@ -9,13 +9,12 @@
   </clients>
   
   <servers>
-    <server host="dev18.pdffiller.com" port="8085" type="tcp"></server>
+    <server host="devapp.pdffiller.com" port="8080" type="tcp"></server>
   </servers>
 
   <load>
-   <arrivalphase phase="1" duration="30" unit="minute">
-     <!--<users interarrival="0.04" unit="second"></users>-->
-     <users interarrival="0.04" unit="second"></users>
+   <arrivalphase phase="1" duration="1" unit="minute">
+     <users interarrival="1" unit="second"></users>
    </arrivalphase>
   </load>
 
@@ -214,9 +213,7 @@
       <request subst="true">        
         <websocket type="message">
             {
-			    "destroy": {
-			        "destroy": true
-			    }
+			    "destroy": true
 			}
         </websocket>
       </request>
